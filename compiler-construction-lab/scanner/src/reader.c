@@ -16,11 +16,17 @@ int readChar(void) {
 }
 
 int openInputStream(char *fileName) {
-  inputStream = fopen(fileName, "rt");
-  if (inputStream == NULL)
+  inputStream = fopen(fileName, "r");
+
+
+  if (inputStream == NULL) {
     return IO_ERROR;
+  }
+
+  
   lineNo = 1;
   colNo = 0;
+
   readChar();
   return IO_SUCCESS;
 }

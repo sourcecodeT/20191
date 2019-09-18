@@ -51,7 +51,7 @@ TokenType checkKeyword(char *string) {
 }
 
 Token* makeToken(TokenType tokenType, int lineNo, int colNo) {
-  Token *token = (Token*)malloc(sizeof(Token));
+  Token *token = (Token *)malloc(sizeof(Token));
   token->tokenType = tokenType;
   token->lineNo = lineNo;
   token->colNo = colNo;
