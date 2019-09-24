@@ -14,8 +14,7 @@ extern CharCode charCodes[];
 
 /***************************************************************/
 
-void skipBlank()
-{
+void skipBlank() {
 	while ((currentChar != EOF) && (charCodes[currentChar] == CHAR_SPACE))
 		readChar();
 }
@@ -23,26 +22,24 @@ void skipBlank()
 void skipComment()
 {
 	int state = 0;
-	while ((currentChar != EOF) && (state < 2))
-	{
-		switch (charCodes[currentChar])
-		{
-		case CHAR_TIMES:
-			state = 1;
-			break;
-		case CHAR_RPAR:
-			if (state == 1)
-				state = 2;
-			else
+	while ((currentChar != EOF) && (state < 2)) {
+		switch (charCodes[currentChar]) {
+			case CHAR_TIMES:
+				state = 1;
+				break;
+			case CHAR_RPAR:
+				if (state == 1)
+					state = 2;
+				else
+					state = 0;
+				break;
+			default:
 				state = 0;
-			break;
-		default:
-			state = 0;
 		}
 		readChar();
 	}
-	if (state != 2)
-	{
+
+	if (state != 2)	{
 		error(ERR_ENDOFCOMMENT, lineNo, colNo);
 	}
 }
@@ -55,26 +52,21 @@ Token *readIdentKeyword(void)
 	token->string[0] = (char)currentChar;
 	readChar();
 
-	while ((currentChar != EOF) && ((charCodes[currentChar] == CHAR_LETTER) || (charCodes[currentChar] == CHAR_DIGIT)))
-	{
-		if (count <= MAX_IDENT_LEN)
-		{
+	while ((currentChar != EOF) && ((charCodes[currentChar] == CHAR_LETTER) || (charCodes[currentChar] == CHAR_DIGIT))) {
+		if (count <= MAX_IDENT_LEN) {
 			token->string[count++] = (char)currentChar;
 		}
 		readChar();
 	}
 
-	if (count > MAX_IDENT_LEN)
-	{
+	if (count > MAX_IDENT_LEN) {
 		error(ERR_IDENTTOOLONG, token->lineNo, token->colNo);
-		return token;
 	}
 
 	token->string[count] = '\0';
 	token->tokenType = checkKeyword(token->string);
 
-	if (token->tokenType == TK_NONE)
-	{
+	if (token->tokenType == TK_NONE) {
 		token->tokenType = TK_IDENT;
 	}
 
@@ -87,9 +79,15 @@ Token *readNumber(void)
 	int count = 0;
 
 	while ((currentChar != EOF) && (charCodes[currentChar] == CHAR_DIGIT))
-	{
-		token->string[count++] = (char)currentChar;
+	{	
+		if (count <= MAX_NUMBER_LEN) {
+			token->string[count++] = (char)currentChar;
+		}
 		readChar();
+	}
+
+	if (count > MAX_NUMBER_LEN) {
+		error(ERR_NUMBERTOOLONG, token->lineNo, token->colNo);
 	}
 
 	token->string[count] = '\0';
@@ -120,13 +118,10 @@ Token *readConstChar(void)
 		return token;
 	}
 
-	if (charCodes[currentChar] == CHAR_SINGLEQUOTE)
-	{
+	if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
 		readChar();
 		return token;
-	}
-	else
-	{
+	} else {
 		token->tokenType = TK_NONE;
 		error(ERR_INVALIDCHARCONSTANT, token->lineNo, token->colNo);
 		return token;

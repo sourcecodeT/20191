@@ -21,6 +21,7 @@ BEGIN
 END;  (*END OF HANOI*)
 
 BEGIN
+  ooo_ooo
   FOR  N := 1  TO  4  DO  
     BEGIN
       FOR  I:=1  TO  4  DO  
