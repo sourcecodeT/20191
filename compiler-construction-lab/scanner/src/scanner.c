@@ -14,6 +14,27 @@ extern CharCode charCodes[];
 
 /***************************************************************/
 
+void upperString(char s[]) {
+   int c = 0;
+   while (s[c] != '\0') {
+      if (s[c] >= 'a' && s[c] <= 'z') {
+         s[c] = s[c] - 32;
+      }
+      c++;
+   }
+}
+
+
+void lowerString(char s[]) {
+   int c = 0;
+   while (s[c] != '\0') {
+      if (s[c] >= 'A' && s[c] <= 'Z') {
+         s[c] = s[c] + 32;
+      }
+      c++;
+   }
+}
+
 void skipBlank() {
 	while ((currentChar != EOF) && (charCodes[currentChar] == CHAR_SPACE))
 		readChar();
@@ -302,7 +323,6 @@ void printToken(Token *token)
 	case TK_EOF:
 		printf("TK_EOF\n");
 		break;
-
 	case KW_PROGRAM:
 		printf("KW_PROGRAM\n");
 		break;
