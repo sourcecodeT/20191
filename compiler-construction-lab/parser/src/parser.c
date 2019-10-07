@@ -125,38 +125,76 @@ void compileTypeDecl(void)
 
 void compileVarDecls(void)
 {
-  // TODO
+  if (lookAhead->tokenType == TK_IDENT)
+  {
+    compileVarDecl();
+    compileVarDecls();
+  }
 }
 
 void compileVarDecl(void)
 {
-  // TODO
+  eat(TK_IDENT);
+  eat(SB_COLON);
+  compileType();
+  eat(SB_SEMICOLON);
 }
 
 void compileSubDecls(void)
 {
   assert("Parsing subtoutines ....");
-  // TODO
+  if (lookAhead->tokenType == KW_FUNCTION)
+  {
+    compileFuncDecl();
+    compileSubDecls();
+  }
+  if (lookAhead->tokenType == KW_PROCEDURE)
+  {
+    compileProcDecl();
+    compileSubDecls();
+  }
   assert("Subtoutines parsed ....");
 }
 
 void compileFuncDecl(void)
 {
   assert("Parsing a function ....");
-  // TODO
+  eat(KW_FUNCTION);
+  eat(TK_IDENT);
+  compileParams();
+  eat(SB_COLON);
+  compileBasicType();
+  eat(SB_SEMICOLON);
+  compileBlock();
+  eat(SB_SEMICOLON);
   assert("Function parsed ....");
 }
 
 void compileProcDecl(void)
 {
   assert("Parsing a procedure ....");
-  // TODO
+  eat(KW_PROCEDURE);
+  eat(TK_IDENT);
+  compileParams();
+  eat(SB_SEMICOLON);
+  compileBlock();
+  eat(SB_SEMICOLON);
   assert("Procedure parsed ....");
 }
 
 void compileUnsignedConstant(void)
 {
-  // TODO
+  switch (lookAhead->tokenType)
+  {
+  case TK_NUMBER:
+  case TK_IDENT:
+  case TK_CHAR:
+    eat(lookAhead->tokenType);
+    break;
+  default:
+    error(ERR_INVALIDCONSTANT, lookAhead->lineNo, lookAhead->colNo);
+    break;
+  }
 }
 
 void compileConstant(void)
@@ -205,7 +243,7 @@ void compileType(void)
     eat(KW_ARRAY);
     eat(SB_LSEL);
     eat(TK_NUMBER);
-    eat(SB_RPAR);
+    eat(SB_RSEL);
     eat(KW_OF);
     compileType();
     break;
@@ -231,9 +269,9 @@ void compileBasicType(void)
 
 void compileParams(void)
 {
-  if (lookAhead->tokenType == SB_LSEL)
+  if (lookAhead->tokenType == SB_LPAR)
   {
-    eat(SB_LSEL);
+    eat(SB_LPAR);
     compileParam();
     compileParams2();
     eat(SB_RPAR);
@@ -323,7 +361,7 @@ void compileAssignSt(void)
   assert("Parsing an assign statement ....");
   eat(TK_IDENT);
   int countVariables = 1;
-  int countExpression = 1;
+  int countExpression = 0;
   if (lookAhead->tokenType == SB_LSEL)
   {
     compileIndexes();
@@ -358,14 +396,18 @@ void compileAssignSt(void)
 void compileCallSt(void)
 {
   assert("Parsing a call statement ....");
-  // TODO
+  eat(KW_CALL);
+  eat(TK_IDENT);
+  compileArguments();
   assert("Call statement parsed ....");
 }
 
 void compileGroupSt(void)
 {
   assert("Parsing a group statement ....");
-  // TODO
+  eat(KW_BEGIN);
+  compileStatements();
+  eat(KW_END);
   assert("Group statement parsed ....");
 }
 
@@ -413,9 +455,9 @@ void compileForSt(void)
 
 void compileArguments(void)
 {
-  if (lookAhead->tokenType == SB_LSEL)
+  if (lookAhead->tokenType == SB_LPAR)
   {
-    eat(SB_LSEL);
+    eat(SB_LPAR);
     compileExpression();
     compileArguments2();
     eat(SB_RPAR);
@@ -448,9 +490,11 @@ void compileCondition2(void)
   case SB_LE:
   case SB_GT:
   case SB_GE:
+  {
     eat(lookAhead->tokenType);
     compileExpression();
     break;
+  }
   }
 }
 
@@ -495,11 +539,16 @@ void compileTerm(void)
 
 void compileTerm2(void)
 {
-  if (lookAhead->tokenType == SB_TIMES || lookAhead->tokenType == SB_SLASH)
+  switch (lookAhead->tokenType)
+  {
+  case SB_TIMES:
+  case SB_SLASH:
   {
     eat(lookAhead->tokenType);
     compileFactor();
     compileTerm2();
+    break;
+  }
   }
 }
 
@@ -507,18 +556,40 @@ void compileFactor(void)
 {
   switch (lookAhead->tokenType)
   {
-  case /* constant-expression */:
-    /* code */
+  case TK_NUMBER:
+  case TK_CHAR:
+    eat(lookAhead->tokenType);
     break;
-
+  case TK_IDENT:
+    eat(TK_IDENT);
+    if (lookAhead->tokenType == SB_LSEL)
+    {
+      compileIndexes();
+    }
+    else if (lookAhead->tokenType == SB_LPAR)
+    {
+      compileArguments();
+    }
+    break;
+  case SB_LPAR:
+    eat(SB_LPAR);
+    compileExpression();
+    eat(SB_RPAR);
   default:
+    error(ERR_INVALIDFACTOR, lookAhead->lineNo, lookAhead->colNo);
     break;
   }
 }
 
 void compileIndexes(void)
 {
-  // TODO
+  if (lookAhead->tokenType == SB_LSEL)
+  {
+    eat(SB_LSEL);
+    compileExpression();
+    eat(SB_RSEL);
+    compileIndexes();
+  }
 }
 
 int compile(char *fileName)
