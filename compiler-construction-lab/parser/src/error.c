@@ -8,8 +8,10 @@
 #include <stdlib.h>
 #include "error.h"
 
-void error(ErrorCode err, int lineNo, int colNo) {
-  switch (err) {
+void error(ErrorCode err, int lineNo, int colNo)
+{
+  switch (err)
+  {
   case ERR_ENDOFCOMMENT:
     printf("%d-%d:%s\n", lineNo, colNo, ERM_ENDOFCOMMENT);
     break;
@@ -43,6 +45,9 @@ void error(ErrorCode err, int lineNo, int colNo) {
   case ERR_INVALIDCOMPARATOR:
     printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDCOMPARATOR);
     break;
+  case ERR_INVALIDFUNCTIONDECL:
+    printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDFUNCTIONDECL);
+    break;
   case ERR_INVALIDEXPRESSION:
     printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDEXPRESSION);
     break;
@@ -56,11 +61,13 @@ void error(ErrorCode err, int lineNo, int colNo) {
   exit(0);
 }
 
-void missingToken(TokenType tokenType, int lineNo, int colNo) {
+void missingToken(TokenType tokenType, int lineNo, int colNo)
+{
   printf("%d-%d:Missing %s\n", lineNo, colNo, tokenToString(tokenType));
   exit(0);
 }
 
-void assert(char *msg) {
+void assert(char *msg)
+{
   printf("%s\n", msg);
 }

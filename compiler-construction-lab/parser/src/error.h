@@ -8,7 +8,8 @@
 #define __ERROR_H__
 #include "token.h"
 
-typedef enum {
+typedef enum
+{
   ERR_ENDOFCOMMENT,
   ERR_IDENTTOOLONG,
   ERR_INVALIDCHARCONSTANT,
@@ -22,9 +23,9 @@ typedef enum {
   ERR_INVALIDCOMPARATOR,
   ERR_INVALIDEXPRESSION,
   ERR_INVALIDTERM,
-  ERR_INVALIDFACTOR
+  ERR_INVALIDFACTOR,
+  ERR_INVALIDFUNCTIONDECL
 } ErrorCode;
-
 
 #define ERM_ENDOFCOMMENT "End of comment expected!"
 #define ERM_IDENTTOOLONG "Identification too long!"
@@ -40,6 +41,7 @@ typedef enum {
 #define ERM_INVALIDEXPRESSION "Invalid expression!"
 #define ERM_INVALIDTERM "Invalid term!"
 #define ERM_INVALIDFACTOR "Invalid factor!"
+#define ERM_INVALIDFUNCTIONDECL "Invalid function decl!"
 
 void error(ErrorCode err, int lineNo, int colNo);
 void missingToken(TokenType tokenType, int lineNo, int colNo);

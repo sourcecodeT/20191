@@ -143,16 +143,18 @@ void compileVarDecl(void)
 void compileSubDecls(void)
 {
   assert("Parsing subtoutines ....");
-  if (lookAhead->tokenType == KW_FUNCTION)
+  while (lookAhead->tokenType == KW_FUNCTION || lookAhead->tokenType == KW_PROCEDURE)
   {
-    compileFuncDecl();
-    compileSubDecls();
+    if (lookAhead->tokenType == KW_FUNCTION)
+    {
+      compileFuncDecl();
+    }
+    if (lookAhead->tokenType == KW_PROCEDURE)
+    {
+      compileProcDecl();
+    }
   }
-  if (lookAhead->tokenType == KW_PROCEDURE)
-  {
-    compileProcDecl();
-    compileSubDecls();
-  }
+
   assert("Subtoutines parsed ....");
 }
 
@@ -161,6 +163,14 @@ void compileFuncDecl(void)
   assert("Parsing a function ....");
   eat(KW_FUNCTION);
   eat(TK_IDENT);
+  // if (lookAhead->tokenType == SB_LPAR)
+  // {
+  //   compileParams();
+  // }
+  // else
+  // {
+  //   error(ERR_INVALIDFUNCTIONDECL, lookAhead->lineNo, lookAhead->colNo);
+  // }
   compileParams();
   eat(SB_COLON);
   compileBasicType();
@@ -271,10 +281,17 @@ void compileParams(void)
 {
   if (lookAhead->tokenType == SB_LPAR)
   {
-    eat(SB_LPAR);
+    // eat(SB_LPAR);
+    // if (lookAhead->tokenType == SB_RPAR)
+    // {
+    //   eat(SB_RPAR);
+    // }
+    // else
+    // {
     compileParam();
     compileParams2();
     eat(SB_RPAR);
+    // }
   }
 }
 
