@@ -28,5 +28,4 @@ typedef enum {
   CHAR_RPAR,
   CHAR_UNKNOWN
 } CharCode;
-
 #endif

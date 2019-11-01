@@ -24,7 +24,7 @@ BEGIN
      END
 END;
 
-FUNCTION SUM(): INTEGER;
+FUNCTION SUM: INTEGER;
 VAR I: INTEGER;
     S : INTEGER;
 BEGIN
@@ -41,9 +41,9 @@ BEGIN
    CH := 'y';
    WHILE CH = 'y' DO
      BEGIN
-       CALL INPUT;
+       INPUT;
        CALL OUTPUT;
-       CALL WRITEI(SUM);
+       CALL WRITEI(SUM(2));
        CH := READC;
      END
 END.  (* Example 4 *)
