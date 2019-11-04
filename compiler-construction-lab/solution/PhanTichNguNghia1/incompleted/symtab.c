@@ -56,7 +56,7 @@ Type* duplicateType(Type* type) {
 }
 
 int compareType(Type* type1, Type* type2) {
-      if (type1->typeClass == type2->typeClass) {
+    if (type1->typeClass == type2->typeClass) {
     if (type1->typeClass == TP_ARRAY) {
       if (type1->arraySize == type2->arraySize)
     return compareType(type1->elementType, type2->elementType);
