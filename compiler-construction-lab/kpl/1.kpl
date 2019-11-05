@@ -1,0 +1,43 @@
+PROGAM DEMO;
+TYPE T = INTEGER;
+VAR A : ARRAY(. 10 .) OF T;
+    N : INTEGER;
+
+PROCEDURE INPUT;
+VAR I : INTEGER;
+BEGIN
+  N := READI;
+  FOR I := 1 TO N DO
+     A(.I.) := READI;
+END;
+
+PROCEDURE OUTPUT;
+VAR I : INTEGER;
+BEGIN
+    I := N;
+    WHILE I > 0 DO
+    BEGIN
+        CALL WRITEI(A(.I.));
+        CALL WRITELN;
+        I := I - 1;
+    END
+END;
+
+FUNCTION GET_MAX: INTEGER;
+VAR I: INTEGER;
+    MAX : INTEGER;
+BEGIN
+    I := 1;
+    MAX := A(.I.);
+    
+    FOR I := 2 TO N DO
+    BEGIN
+        IF MAX < A(.I.) THEN MAX := A(.I.)   
+    END
+END;
+
+BEGIN
+    CALL INPUT;
+    CALL OUTPUT;
+    CALL WRITEI(GET_MAX);
+END. 

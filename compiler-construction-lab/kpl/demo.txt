@@ -1,0 +1,141 @@
+Example-1-------------------------------------------------
+
+PROGAM DEMO;
+TYPE T = INTEGER;
+VAR A : ARRAY(. 10 .) OF T;
+    N : INTEGER;
+
+PROCEDURE INPUT;
+VAR I : INTEGER;
+BEGIN
+  N := READI;
+  FOR I := 1 TO N DO
+     A(.I.) := READI;
+END;
+
+PROCEDURE OUTPUT;
+VAR I : INTEGER;
+BEGIN
+    I := N;
+    WHILE I > 0 DO
+    BEGIN
+        CALL WRITEI(A(.I.));
+        CALL WRITELN;
+        I := I - 1;
+    END
+END;
+
+FUNCTION GET_MAX: INTEGER;
+VAR I: INTEGER;
+    MAX : INTEGER;
+BEGIN
+    I := 1;
+    MAX := A(.I.);
+    
+    FOR I := 2 TO N DO
+    BEGIN
+        IF MAX < A(.I.) THEN MAX := A(.I.)   
+    END
+END;
+
+BEGIN
+    CALL INPUT;
+    CALL OUTPUT;
+    CALL WRITEI(GET_MAX);
+END. 
+
+Example-2------------------------------------------------------
+
+void compileIndexes(void)
+{
+  if (lookAhead->tokenType == SB_LSEL)
+  {
+    eat(SB_LSEL);
+    compileExpression();
+    eat(SB_RSEL);
+    compileIndexes();
+  }
+}
+
+Example-3-------------------------------------------------------
+
+void compileStatement(void)
+{
+  switch (lookAhead->tokenType)
+  {
+    case TK_IDENT:
+      assert("Parsing an assign or call statement ....");
+      eat(TK_IDENT);
+      switch (lookAhead->tokenType)
+      {
+        case SB_LSEL:
+          compileIndexes();
+          break;
+        case SB_ASSIGN:
+          compileIndexes();
+          break;
+        case SB_LPAR:
+          compileAssignSt();
+          break;
+        default:
+          break;
+      }
+      break;
+    case KW_BEGIN:
+      compileGroupSt();
+      break;
+    case KW_IF:
+      compileIfSt();
+      break;
+    case KW_WHILE:
+      compileWhileSt();
+      break;
+    case KW_FOR:
+      compileForSt();
+      break;
+    case SB_SEMICOLON:
+    case KW_END:
+    case KW_ELSE:
+      break;
+    default:
+      error(ERR_INVALIDSTATEMENT, lookAhead->lineNo, lookAhead->colNo);
+      break;
+  }
+}
+
+
+void compileCallSt(void)
+{
+  eat(TK_IDENT);
+  compileArguments();
+}
+
+Example-4------------------------------------------------------------------------
+Token * readIdentKeyword(void)
+{
+  Token * token = makeToken(TK_NONE, lineNo, colNo);
+  int count = 1;
+
+  token->string[0] = (char)currentChar;
+  if (charCodes[token->string[0]] == CHAR_DIGIT) {
+    error(ERR_INVALIDIDENT, lineNo, colNo);
+  }
+  readChar();
+
+  while ((currentChar != EOF) &&
+         ((charCodes[currentChar] == CHAR_LETTER) ||
+          (charCodes[currentChar] == CHAR_DIGIT) || (currentChar == '-')))
+  {
+    if (count <= 15)
+      token->string[count++] = (char)currentChar;
+    readChar();
+  }
+
+  token->string[count] = '\0';
+  token->tokenType = checkKeyword(token->string);
+
+  if (token->tokenType == TK_NONE)
+    token->tokenType = TK_IDENT;
+
+  return token;
+}

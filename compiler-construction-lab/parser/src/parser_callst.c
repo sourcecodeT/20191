@@ -355,17 +355,19 @@ void compileStatement(void)
     case TK_IDENT:
       assert("Parsing an assign or call statement ....");
       eat(TK_IDENT);
-      if (lookAhead->tokenType == SB_LSEL)
+      switch (lookAhead->tokenType)
       {
-        compileIndexes();
-      }
-      if (lookAhead->tokenType == SB_ASSIGN)
-      {
-        compileAssignSt();
-      }
-      else
-      {
-        compileCallSt();
+        case SB_LSEL:
+          compileIndexes();
+          break;
+        case SB_ASSIGN:
+          compileIndexes();
+          break;
+        case SB_LPAR:
+          compileAssignSt();
+          break;
+        default:
+          break;
       }
       break;
     case KW_BEGIN:

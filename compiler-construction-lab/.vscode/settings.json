@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "reader.h": "c"
+        "reader.h": "c",
+        "scanner.h": "c"
     }
 }
