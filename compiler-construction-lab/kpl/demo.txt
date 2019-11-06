@@ -58,7 +58,8 @@ void compileIndexes(void)
 }
 
 Example-3-------------------------------------------------------
-
+CallSt ::= ProcedureIdent Arguments
+----------------------------------------------------------------
 void compileStatement(void)
 {
   switch (lookAhead->tokenType)
@@ -111,6 +112,7 @@ void compileCallSt(void)
 }
 
 Example-4------------------------------------------------------------------------
+
 Token * readIdentKeyword(void)
 {
   Token * token = makeToken(TK_NONE, lineNo, colNo);
@@ -138,4 +140,130 @@ Token * readIdentKeyword(void)
     token->tokenType = TK_IDENT;
 
   return token;
+}
+
+Example-5------------------------------------------------------------------------------
+VarDecl ::= TK_IDENT VarDecls2 SB_COLON TYPE SB_SEMICOLON
+VarDecls2 ::= SM_COMMA TK_IDENT VarDecls2
+VarDecls2 ::= !3
+----------------------------------------------------------------------------------------
+void compileVarDecl(void)
+{
+  eat(TK_IDENT);
+  compileVarDecls2();
+  eat(SB_COLON);
+  compileType();
+  eat(SB_SEMICOLON);
+}
+
+void compileVarDecls2(void)
+{
+  if (lookAhead->tokenType == SB_COMMA)
+  {
+    eat(SB_COMMA);
+    eat(TK_IDENT);
+    compileVarDecls2();
+  }
+}
+
+Example-6------------------------------------------------------------------
+Arguments ::= SB_LPAR Arguments1 SB_RPAR
+Arguments1 ::= Expression Arguments2
+Arguments1 ::= !3
+Arguments2 ::= SB_COMMA Expression Arguments2
+Arguments2 ::= !3
+---------------------------------------------------------------------------
+
+void compileArguments(void)
+{
+  switch (lookAhead->tokenType)
+  {
+    case SB_LPAR:
+      eat(SB_LPAR);
+      compileExpression();
+      compileArguments2();
+      eat(SB_RPAR);
+      break;
+    case SB_TIMES:
+    case SB_SLASH:
+    case SB_PLUS:
+    case SB_MINUS:
+    case KW_TO:
+    case KW_DO:
+    case SB_RPAR:
+    case SB_COMMA:
+    case SB_EQ:
+    case SB_NEQ:
+    case SB_LE:
+    case SB_LT:
+    case SB_GE:
+    case SB_GT:
+    case SB_RSEL:
+    case SB_SEMICOLON:
+    case KW_END:
+    case KW_ELSE:
+    case KW_THEN:
+      break;
+    default:
+      error(ERR_INVALIDARGUMENTS, lookAhead->lineNo, lookAhead->colNo);
+  }
+}
+
+void compileArguments2(void)
+{
+  if (lookAhead->tokenType == SB_COMMA)
+  {
+    eat(SB_COMMA);
+    compileExpression();
+    compileArguments2();
+  }
+}
+
+Example-7--------------------------------------------------------------------------
+Declareration
+-----------------------------------------------------------------------------------
+void compileDeclarations(void)
+{
+    switch (lookAhead->tokenType)
+    {
+    case KW_CONST:
+        eat(KW_CONST);
+        compileConstDecl();
+        compileConstDecls();
+        compileDeclarations();
+        break;
+    case KW_TYPE:
+        eat(KW_TYPE);
+        compileTypeDecl();
+        compileTypeDecls();
+        compileDeclarations();
+        break;
+    case KW_VAR:
+        eat(KW_VAR);
+        compileVarDecl();
+        compileVarDecls();
+        compileDeclarations();
+        break;
+    case KW_PROCEDURE:
+    case KW_FUNCTION:
+        compileSubDecls();
+        compileDeclarations();
+    default:
+        break;
+    }
+}
+
+void compileBlock2(void)
+{
+    eat(KW_BEGIN);
+    compileStatements();
+    eat(KW_END);
+}
+
+void compileBlock(void)
+{
+    assert("Parsing a Block ....");
+    compileDeclarations();
+    compileBlock2();
+    assert("Block parsed!");
 }

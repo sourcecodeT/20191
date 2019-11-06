@@ -5,7 +5,7 @@ LIBS =  -lm
 all: kplc
 
 kplc: main.o parser.o scanner.o reader.o charcode.o token.o error.o symtab.o debug.o
-	${CC} main.o parser.o scanner.o reader.o charcode.o token.o error.o symtab.o debug.o -o kplc
+	${CC} -g main.o parser.o scanner.o reader.o charcode.o token.o error.o symtab.o debug.o -o kplc
 
 main.o: main.c
 	${CC} ${CFLAGS} main.c

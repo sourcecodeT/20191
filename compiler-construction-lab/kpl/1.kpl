@@ -1,10 +1,83 @@
-PROGAM DEMO;
+Program Example1; (* Example 1 *)
+Var n : Integer;
+Begin
+End. (* Example 1 *)
+
+------------------------------------------------------------------
+Program Example2; (* Factorial *)
+   
+Var n : Integer;
+
+Function F(n : Integer) : Integer;
+  Begin
+    If n = 0 Then F := 1 Else F := N * F (N - 1);
+  End;
+
+Begin
+  For n := 1 To 7 Do
+    Begin
+      WriteLn 1,2,3;
+      Call WriteI(F(i));
+    End;
+End. (* Factorial *)
+
+-------------------------------------------------------------------
+PROGRAM  EXAMPLE3;  (* TOWER OF HANOI *)
+VAR  I:INTEGER;  
+     N:INTEGER;  
+     P:INTEGER;  
+     Q:INTEGER;
+     C:CHAR;
+
+PROCEDURE  HANOI(N:INTEGER;  S:INTEGER;  Z:INTEGER);
+BEGIN
+  IF  N != 0  THEN
+    BEGIN
+      CALL  HANOI(N-1,S,6-S-Z);
+      I:=I+1;  
+      CALL  WRITELN;
+      CALL  WRITEI(I);  
+      CALL  WRITEI(N);
+      CALL  WRITEI(S);  
+      CALL  WRITEI(Z);
+      CALL  HANOI(N-1,6-S-Z,Z)
+    END
+END;  (*END OF HANOI*)
+
+BEGIN
+  FOR  N := 1  TO  4  DO  
+    BEGIN
+      FOR  I:=1  TO  4  DO  
+        CALL  WRITEC(' ');
+      CALL  READC(C);  
+      CALL  WRITEC(C)
+    END;
+  P:=1;  
+  Q:=2;
+  FOR  N:=2  TO  4  DO
+    BEGIN  
+      I:=0;  
+      CALL  HANOI(N,P,Q);  
+      CALL  WRITELN  
+    END
+END.  (* TOWER OF HANOI *)
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+PROGRAM  EXAMPLE4;  (* Example 4 *)
+CONST MAX = 10;
 TYPE T = INTEGER;
-VAR A : ARRAY(. 10 .) OF T;
-    N : INTEGER;
+VAR  A : ARRAY(. 10 .) OF T;
+     N : INTEGER;
+     CH : CHAR;
 
 PROCEDURE INPUT;
 VAR I : INTEGER;
+    TMP : INTEGER;
 BEGIN
   N := READI;
   FOR I := 1 TO N DO
@@ -14,30 +87,33 @@ END;
 PROCEDURE OUTPUT;
 VAR I : INTEGER;
 BEGIN
-    I := N;
-    WHILE I > 0 DO
-    BEGIN
-        CALL WRITEI(A(.I.));
-        CALL WRITELN;
-        I := I - 1;
-    END
+  FOR I := 1 TO N DO
+     BEGIN
+       CALL WRITEI(A(.I.));
+       CALL WRITELN;
+     END
 END;
 
-FUNCTION GET_MAX: INTEGER;
+FUNCTION SUM: INTEGER;
 VAR I: INTEGER;
-    MAX : INTEGER;
+    S : INTEGER;
 BEGIN
+    S := 0;
     I := 1;
-    MAX := A(.I.);
-    
-    FOR I := 2 TO N DO
-    BEGIN
-        IF MAX < A(.I.) THEN MAX := A(.I.)   
-    END
+    WHILE I <= N DO
+     BEGIN
+       S := S + A(.I.);
+       I := I + 1;
+     END
 END;
 
 BEGIN
-    CALL INPUT;
-    CALL OUTPUT;
-    CALL WRITEI(GET_MAX);
-END. 
+   CH := 'y';
+   WHILE CH = 'y' DO
+     BEGIN
+       INPUT;
+       CALL OUTPUT;
+       CALL WRITEI(SUM);
+       CH := READC;
+     END
+END.  (* Example 4 *)
