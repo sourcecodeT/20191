@@ -2,7 +2,11 @@ Program Example2; (* Factorial *)
    
 Var n : Integer;
 
+<<<<<<< Updated upstream
 Function F(n : Integer) : Integer;
+=======
+Function F : Integer;
+>>>>>>> Stashed changes
   Begin
     If n = 0 Then F := 1 Else F := N * F (N - 1);
   End;
