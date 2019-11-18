@@ -1,12 +1,6 @@
 Program Example2; (* Factorial *)
-   
-Var n : Integer;
 
-<<<<<<< Updated upstream
-Function F(n : Integer) : Integer;
-=======
 Function F : Integer;
->>>>>>> Stashed changes
   Begin
     If n = 0 Then F := 1 Else F := N * F (N - 1);
   End;
@@ -14,7 +8,7 @@ Function F : Integer;
 Begin
   For n := 1 To 7 Do
     Begin
-      WriteLn 1,2,3;
-      Call WriteI(F(i));
+      WriteLn;
+      WriteI(F(i));
     End;
 End. (* Factorial *)
