@@ -1,8 +1,3 @@
-/* 
- * @copyright (c) 2008, Hedspi, Hanoi University of Technology
- * @author Huu-Duc Nguyen
- * @version 1.0
- */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,9 +26,7 @@ void scan(void)
 void eat(TokenType tokenType)
 {
   if (lookAhead->tokenType == tokenType)
-  {
     scan();
-  }
   else
     missingToken(tokenType, lookAhead->lineNo, lookAhead->colNo);
 }
@@ -297,7 +290,6 @@ ConstantValue *compileConstant2(void)
     break;
   case TK_IDENT:
     eat(TK_IDENT);
-    // TODO: check if the integer constant identifier is declared and get its value
     obj = checkDeclaredConstant(currentToken->string);
     if (obj->constAttrs->value->type == TP_INT)
       constValue = duplicateConstantValue(obj->constAttrs->value);

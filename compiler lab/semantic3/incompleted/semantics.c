@@ -24,26 +24,20 @@ Object *lookupObject(char *name)
 
 void checkFreshIdent(char *name)
 {
-  // TODO
-  if (lookupObject(name) != NULL)
-  {
+  if (findObject(symtab->currentScope->objList, name) != NULL)
     error(ERR_DUPLICATE_IDENT, currentToken->lineNo, currentToken->colNo);
-  }
 }
 
 Object *checkDeclaredIdent(char *name)
 {
   Object *obj = lookupObject(name);
   if (obj == NULL)
-  {
     error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);
-  }
   return obj;
 }
 
 Object *checkDeclaredConstant(char *name)
 {
-  // TODO
   Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_CONSTANT, currentToken->lineNo, currentToken->colNo);
@@ -56,8 +50,8 @@ Object *checkDeclaredConstant(char *name)
 
 Object *checkDeclaredType(char *name)
 {
-  // TODO
   Object *obj = lookupObject(name);
+
   if (obj == NULL)
     error(ERR_UNDECLARED_TYPE, currentToken->lineNo, currentToken->colNo);
 
@@ -69,10 +63,11 @@ Object *checkDeclaredType(char *name)
 
 Object *checkDeclaredVariable(char *name)
 {
-  // TODO
   Object *obj = lookupObject(name);
+
   if (obj == NULL)
     error(ERR_UNDECLARED_VARIABLE, currentToken->lineNo, currentToken->colNo);
+
   if (obj->kind != OBJ_VARIABLE)
     error(ERR_INVALID_VARIABLE, currentToken->lineNo, currentToken->colNo);
 
@@ -81,10 +76,11 @@ Object *checkDeclaredVariable(char *name)
 
 Object *checkDeclaredFunction(char *name)
 {
-  // TODO
   Object *obj = lookupObject(name);
+
   if (obj == NULL)
     error(ERR_UNDECLARED_FUNCTION, currentToken->lineNo, currentToken->colNo);
+
   if (obj->kind != OBJ_FUNCTION)
     error(ERR_INVALID_FUNCTION, currentToken->lineNo, currentToken->colNo);
 
@@ -93,10 +89,11 @@ Object *checkDeclaredFunction(char *name)
 
 Object *checkDeclaredProcedure(char *name)
 {
-  // TODO
   Object *obj = lookupObject(name);
+
   if (obj == NULL)
     error(ERR_UNDECLARED_PROCEDURE, currentToken->lineNo, currentToken->colNo);
+
   if (obj->kind != OBJ_PROCEDURE)
     error(ERR_INVALID_PROCEDURE, currentToken->lineNo, currentToken->colNo);
 
@@ -105,7 +102,7 @@ Object *checkDeclaredProcedure(char *name)
 
 Object *checkDeclaredLValueIdent(char *name)
 {
-  // TODO
+
   Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);
