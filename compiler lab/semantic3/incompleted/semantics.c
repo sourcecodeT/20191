@@ -8,7 +8,6 @@ extern Token *currentToken;
 
 Object *lookupObject(char *name)
 {
-  // TODO
   Scope *scope = symtab->currentScope;
   Object *obj;
   while (scope != NULL)
@@ -34,7 +33,6 @@ void checkFreshIdent(char *name)
 
 Object *checkDeclaredIdent(char *name)
 {
-  // TODO
   Object *obj = lookupObject(name);
   if (obj == NULL)
   {
@@ -121,6 +119,9 @@ Object *checkDeclaredLValueIdent(char *name)
     if (obj != symtab->currentScope->owner)
       error(ERR_INVALID_IDENT, currentToken->lineNo, currentToken->colNo);
     break;
+  default:
+    error(ERR_INVALID_IDENT, currentToken->lineNo, currentToken->colNo);
   }
+
   return obj;
 }
