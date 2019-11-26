@@ -559,7 +559,7 @@ void compileForSt(void)
 void compileArgument(Object *param)
 {
 
-    //       If the corresponding parameter is a reference, the argument must be a lvalue
+    // If the corresponding parameter is a reference, the argument must be a lvalue
     Type *type;
     if (param->kind == PARAM_REFERENCE)
     {
