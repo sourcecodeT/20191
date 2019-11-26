@@ -1,5 +1,5 @@
 CFLAGS = -c -Wall
-CC = gcc
+CC = gcc -g
 LIBS =  -lm 
 
 all: kplc
