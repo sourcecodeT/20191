@@ -859,7 +859,6 @@ Type *compileFactor(void)
 
 Type *compileIndexes(Type *arrayType)
 {
-
     while (lookAhead->tokenType == SB_LSEL)
     {
         checkArrayType(arrayType);
@@ -869,7 +868,6 @@ Type *compileIndexes(Type *arrayType)
         checkIntType(type);
         eat(SB_RSEL);
     }
-
     return arrayType;
 }
 
