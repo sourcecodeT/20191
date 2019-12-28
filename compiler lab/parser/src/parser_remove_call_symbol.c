@@ -1,9 +1,3 @@
-/*
- * @copyright (c) 2008, Hedspi, Hanoi University of Technology
- * @author Huu-Duc Nguyen
- * @version 1.0
- */
-
 #include <stdlib.h>
 
 #include "error.h"
@@ -306,13 +300,14 @@ void compileStatement(void) {
       eat(TK_IDENT);
       switch (lookAhead->tokenType) {
         case SB_LSEL:
-          compileIndexes();
+          compileAssignSt();
           break;
         case SB_ASSIGN:
-          compileIndexes();
+          eat(SB_ASSIGN);
+          compileExpression();
           break;
         case SB_LPAR:
-          compileAssignSt();
+          compileArguments();
           break;
         default:
           break;

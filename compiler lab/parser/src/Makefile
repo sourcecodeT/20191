@@ -2,7 +2,8 @@ CFLAGS = -c -Wall
 CC = gcc
 LIBS =  -lm 
 
-all: parser
+parser: main.o parser.o scanner.o reader.o charcode.o token.o error.o
+	${CC} main.o parser.o scanner.o reader.o charcode.o token.o error.o -o parser
 
 parser_decls_not_care_order: main.o parser_decls_not_care_order.o scanner.o reader.o charcode.o token.o error.o
 	${CC} main.o parser_decls_not_care_order.o scanner.o reader.o charcode.o token.o error.o -o parser
@@ -10,8 +11,12 @@ parser_decls_not_care_order: main.o parser_decls_not_care_order.o scanner.o read
 parser_var_decls: main.o parser_var_decls.o scanner.o reader.o charcode.o token.o error.o
 	${CC} main.o parser_var_decls.o scanner.o reader.o charcode.o token.o error.o -o parser
 
-parser: main.o parser.o scanner.o reader.o charcode.o token.o error.o
-	${CC} main.o parser.o scanner.o reader.o charcode.o token.o error.o -o parser
+parser_remove_call_symbol: main.o parser_remove_call_symbol.o scanner.o reader.o charcode.o token.o error.o
+	${CC} main.o parser_remove_call_symbol.o scanner.o reader.o charcode.o token.o error.o -o parser
+
+parser_two_type_callst: main.o parser_two_type_callst.o scanner.o reader.o charcode.o token.o error.o
+	${CC} main.o parser_two_type_callst.o scanner.o reader.o charcode.o token.o error.o -o parser
+
 
 main.o: main.c
 	${CC} ${CFLAGS} main.c
@@ -19,14 +24,20 @@ main.o: main.c
 scanner.o: scanner.c
 	${CC} ${CFLAGS} scanner.c
 
+parser.o: parser.c
+	${CC} ${CFLAGS} parser.c
+
 parser_decls_not_care_order.o: parser_decls_not_care_order.c
 	${CC} ${CFLAGS} parser_decls_not_care_order.c
 
 parser_var_decls.o: parser_var_decls.c
 	${CC} ${CFLAGS} parser_var_decls.c
 
-parser.o: parser.c
-	${CC} ${CFLAGS} parser.c
+parser_remove_call_symbol.o: parser_remove_call_symbol.c
+	${CC} ${CFLAGS} parser_remove_call_symbol.c
+
+parser_two_type_callst.o: parser_two_type_callst.c
+	${CC} ${CFLAGS} parser_two_type_callst.c
 
 reader.o: reader.c
 	${CC} ${CFLAGS} reader.c
