@@ -22,6 +22,7 @@ void compileConstDecl(void);
 void compileTypeDecls(void);
 void compileTypeDecl(void);
 void compileVarDecls(void);
+void compileVarDecls2(void);
 void compileVarDecl(void);
 void compileSubDecls(void);
 void compileFuncDecl(void);

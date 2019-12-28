@@ -7,8 +7,8 @@ all: parser
 parser_decls_not_care_order: main.o parser_decls_not_care_order.o scanner.o reader.o charcode.o token.o error.o
 	${CC} main.o parser_decls_not_care_order.o scanner.o reader.o charcode.o token.o error.o -o parser
 
-parser_var_decls: main.o parser.o scanner.o reader.o charcode.o token.o error.o
-	${CC} main.o parser.o scanner.o reader.o charcode.o token.o error.o -o parser
+parser_var_decls: main.o parser_var_decls.o scanner.o reader.o charcode.o token.o error.o
+	${CC} main.o parser_var_decls.o scanner.o reader.o charcode.o token.o error.o -o parser
 
 parser: main.o parser.o scanner.o reader.o charcode.o token.o error.o
 	${CC} main.o parser.o scanner.o reader.o charcode.o token.o error.o -o parser
@@ -22,8 +22,8 @@ scanner.o: scanner.c
 parser_decls_not_care_order.o: parser_decls_not_care_order.c
 	${CC} ${CFLAGS} parser_decls_not_care_order.c
 
-parser_vardecls.o: parser.c
-	${CC} ${CFLAGS} parser.c
+parser_var_decls.o: parser_var_decls.c
+	${CC} ${CFLAGS} parser_var_decls.c
 
 parser.o: parser.c
 	${CC} ${CFLAGS} parser.c
