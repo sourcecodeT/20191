@@ -9,12 +9,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-extern SymTab * symtab;
-extern Token * currentToken;
+extern SymTab *symtab;
+extern Token *currentToken;
 
-Object * lookupObject(char * name) {
-  Scope * scope = symtab->currentScope;
-  Object * obj;
+Object *lookupObject(char *name) {
+  Scope *scope = symtab->currentScope;
+  Object *obj;
 
   while (scope != NULL) {
     obj = findObject(scope->objList, name);
@@ -29,24 +29,24 @@ Object * lookupObject(char * name) {
   return NULL;
 }
 
-void checkFreshIdent(char * name) {
+void checkFreshIdent(char *name) {
   // TODO semantics-3
   if (findObject(symtab->currentScope->objList, name) != NULL)
     error(ERR_DUPLICATE_IDENT, currentToken->lineNo, currentToken->colNo);
 }
 
-Object * checkDeclaredIdent(char * name) {
+Object *checkDeclaredIdent(char *name) {
   // TODO semantics-3
-  Object * obj = lookupObject(name);
+  Object *obj = lookupObject(name);
   if (obj == NULL) {
     error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);
   }
   return obj;
 }
 
-Object * checkDeclaredConstant(char * name) {
+Object *checkDeclaredConstant(char *name) {
   // TODO semantics-3
-  Object * obj = lookupObject(name);
+  Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_CONSTANT, currentToken->lineNo, currentToken->colNo);
   if (obj->kind != OBJ_CONSTANT)
@@ -55,9 +55,9 @@ Object * checkDeclaredConstant(char * name) {
   return obj;
 }
 
-Object * checkDeclaredType(char * name) {
+Object *checkDeclaredType(char *name) {
   // TODO semantics-3
-  Object * obj = lookupObject(name);
+  Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_TYPE, currentToken->lineNo, currentToken->colNo);
   if (obj->kind != OBJ_TYPE)
@@ -66,9 +66,9 @@ Object * checkDeclaredType(char * name) {
   return obj;
 }
 
-Object * checkDeclaredVariable(char * name) {
+Object *checkDeclaredVariable(char *name) {
   // TODO semantics-3
-  Object * obj = lookupObject(name);
+  Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_VARIABLE, currentToken->lineNo, currentToken->colNo);
   if (obj->kind != OBJ_VARIABLE)
@@ -77,9 +77,9 @@ Object * checkDeclaredVariable(char * name) {
   return obj;
 }
 
-Object * checkDeclaredFunction(char * name) {
+Object *checkDeclaredFunction(char *name) {
   // TODO semantics-3
-  Object * obj = lookupObject(name);
+  Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_FUNCTION, currentToken->lineNo, currentToken->colNo);
   if (obj->kind != OBJ_FUNCTION)
@@ -88,9 +88,9 @@ Object * checkDeclaredFunction(char * name) {
   return obj;
 }
 
-Object * checkDeclaredProcedure(char * name) {
+Object *checkDeclaredProcedure(char *name) {
   // TODO semantics-3
-  Object * obj = lookupObject(name);
+  Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_PROCEDURE, currentToken->lineNo, currentToken->colNo);
   if (obj->kind != OBJ_PROCEDURE)
@@ -99,9 +99,9 @@ Object * checkDeclaredProcedure(char * name) {
   return obj;
 }
 
-Object * checkDeclaredLValueIdent(char * name) {
+Object *checkDeclaredLValueIdent(char *name) {
   // TODO semantics-3
-  Object * obj = lookupObject(name);
+  Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);
 
@@ -120,21 +120,21 @@ Object * checkDeclaredLValueIdent(char * name) {
   return obj;
 }
 
-void checkIntType(Type * type) {
+void checkIntType(Type *type) {
   // TODO semantics-4
   if (type->typeClass != TP_INT) {
     error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
   }
 }
 
-void checkCharType(Type * type) {
+void checkCharType(Type *type) {
   // TODO semantics-4
   if (type->typeClass != TP_CHAR) {
     error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
   }
 }
 
-void checkBasicType(Type * type) {
+void checkBasicType(Type *type) {
   // TODO semantics-4
   if (type->typeClass != TP_INT) {
     if (type->typeClass != TP_CHAR) {
@@ -143,14 +143,14 @@ void checkBasicType(Type * type) {
   }
 }
 
-void checkArrayType(Type * type) {
+void checkArrayType(Type *type) {
   // TODO semantics-4
   if (type->typeClass != TP_ARRAY) {
     error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
   }
 }
 
-void checkTypeEquality(Type * type1, Type * type2) {
+void checkTypeEquality(Type *type1, Type *type2) {
   // TODO semantics-4
   if (type1->typeClass != type2->typeClass) {
     error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
