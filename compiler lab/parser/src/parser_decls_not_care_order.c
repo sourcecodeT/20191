@@ -35,14 +35,40 @@ void compileProgram(void) {
 
 void compileBlock(void) {
   assert("Parsing a Block ....");
-  if (lookAhead->tokenType == KW_CONST) {
-    eat(KW_CONST);
-    compileConstDecl();
-    compileConstDecls();
-    compileBlock2();
-  } else
-    compileBlock2();
+  compileDeclarations();
+  compileBlock5();
   assert("Block parsed!");
+}
+
+void compileDeclarations(void) {
+  switch (lookAhead->tokenType) {
+    case KW_CONST:
+      eat(KW_CONST);
+      compileConstDecl();
+      compileConstDecls();
+      compileDeclarations();
+      break;
+    case KW_TYPE:
+      eat(KW_TYPE);
+      compileTypeDecl();
+      compileTypeDecls();
+      compileDeclarations();
+      break;
+    case KW_VAR:
+      eat(KW_VAR);
+      compileVarDecl();
+      compileVarDecls();
+      compileDeclarations();
+      break;
+    case KW_PROCEDURE:
+      compileProcDecl();
+      compileDeclarations();
+      break;
+    case KW_FUNCTION:
+      compileFuncDecl();
+      compileDeclarations();
+      break;
+  }
 }
 
 void compileBlock2(void) {
@@ -134,6 +160,14 @@ void compileFuncDecl(void) {
   assert("Parsing a function ....");
   eat(KW_FUNCTION);
   eat(TK_IDENT);
+  // if (lookAhead->tokenType == SB_LPAR)
+  // {
+  //   compileParams();
+  // }
+  // else
+  // {
+  //   error(ERR_INVALIDFUNCTIONDECL, lookAhead->lineNo, lookAhead->colNo);
+  // }
   compileParams();
   eat(SB_COLON);
   compileBasicType();
@@ -232,9 +266,16 @@ void compileBasicType(void) {
 void compileParams(void) {
   if (lookAhead->tokenType == SB_LPAR) {
     eat(SB_LPAR);
+    // if (lookAhead->tokenType == SB_RPAR)
+    // {
+    //   eat(SB_RPAR);
+    // }
+    // else
+    // {
     compileParam();
     compileParams2();
     eat(SB_RPAR);
+    // }
   }
 }
 
@@ -271,17 +312,10 @@ void compileStatements(void) {
 }
 
 void compileStatements2(void) {
-  switch (lookAhead->tokenType) {
-    case SB_SEMICOLON:
-      eat(SB_SEMICOLON);
-      compileStatement();
-      compileStatements2();
-      break;
-    case KW_END:
-      break;
-    default:
-      error(ERR_INVALIDSTATEMENT, lookAhead->lineNo, lookAhead->colNo);
-      break;
+  if (lookAhead->tokenType == SB_SEMICOLON) {
+    eat(SB_SEMICOLON);
+    compileStatement();
+    compileStatements2();
   }
 }
 

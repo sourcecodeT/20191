@@ -1,4 +1,4 @@
-/* 
+/*
  * @copyright (c) 2008, Hedspi, Hanoi University of Technology
  * @author Huu-Duc Nguyen
  * @version 1.0
@@ -16,6 +16,7 @@ void compileBlock2(void);
 void compileBlock3(void);
 void compileBlock4(void);
 void compileBlock5(void);
+void compileDeclarations(void);
 void compileConstDecls(void);
 void compileConstDecl(void);
 void compileTypeDecls(void);
