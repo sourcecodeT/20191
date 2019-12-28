@@ -427,8 +427,6 @@ void compileLValue(void) {
     if (lValueObj->kind == OBJ_VARIABLE)
         if (lValueObj->varAttrs->type->typeClass == TP_ARRAY)
             compileIndexes();
-        ]
-
     
     // TODO check owner scope
 
