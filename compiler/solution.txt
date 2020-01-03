@@ -1,0 +1,56 @@
+1.B ( thuộc tính tổng hợp tính từ dưới lên/ xx tính từ trên xuống, ae )
+2. sentence : co ki hieu ket thuc 
+   sentential form : bao gom cua sentence
+( deu bat dau tu S)
+=> B
+3. A ( context free gramma : chi dung 26 chu cai => luon chon BNF)
+4.  constant folding : tinh toan bieu thuc hang
+=> A ( KPL khong cho phep tinh toan bieu thuc hang)
+5. tokens : 5
+   lexemes : 6 
+ neu co (*jncs*) => chu thich, ko tinh la token => 3 token 
+6. B
+7. D
+8. B ( LR parser : bottom up) , day them ki hieu cho den khi tim ra ve trai
+9. D
+10. C
+11. B
+12. C
+13. C 
+14. python : interpreter 
+	A
+15. C
+16. D ( without BNF option)
+17. A
+18. C
+19. A
+20. A
+21. B
+22. no correct option
+all statements use indexes -> operators are not allowed 
+23. A (syntax diagram : has name-> non-terminal)
+24. C
+25. D 
+26. C
+27. A
+28. A
+29. D
+30. B
+31. B
+32. B & C 9 ( just choose 1)
+33. C
+34. B ()
+35. C
+
+
+
+lab :
+làm trong 30p
+báo cáo : tối đa 10 trang 
+- ko cần overview tổng quan -> nên cho trong từng bài 
+- ko cần liệt kê dãy các hàm : mô tả hàm nổi bật (1-2 cái, những hàm cô hay hỏi)
+- kết hợp slide theory + lab  
+
+
+
+
