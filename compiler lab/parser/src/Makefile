@@ -23,6 +23,9 @@ parser_args_must_have_parentheses: main.o parser_args_must_have_parentheses.o sc
 parser_repeat: main.o parser_repeat.o scanner.o reader.o charcode.o token.o error.o
 	${CC} main.o parser_repeat.o scanner.o reader.o charcode.o token.o error.o -o parser
 
+parser_sub_decls: main.o parser_sub_decls.o scanner.o reader.o charcode.o token.o error.o
+	${CC} main.o parser_sub_decls.o scanner.o reader.o charcode.o token.o error.o -o parser
+
 main.o: main.c
 	${CC} ${CFLAGS} main.c
 
@@ -49,6 +52,9 @@ parser_args_must_have_parentheses.o: parser_args_must_have_parentheses.c
 
 parser_repeat.o: parser_repeat.c
 	${CC} ${CFLAGS} parser_repeat.c
+
+parser_sub_decls.o: parser_sub_decls.c
+	${CC} ${CFLAGS} parser_sub_decls.c
 
 reader.o: reader.c
 	${CC} ${CFLAGS} reader.c

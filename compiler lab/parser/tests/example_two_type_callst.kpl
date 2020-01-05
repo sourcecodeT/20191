@@ -10,7 +10,7 @@ Function F(N: Integer): Integer;
 Begin
   For n := 1 To 7 Do
     Begin
-      Call WriteLn(1, 2, 3);
+      WriteI 1, 2, 3;
       Call WriteI(F(i));
     End;
 End. (* Factorial *)
