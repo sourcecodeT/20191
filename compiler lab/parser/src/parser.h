@@ -45,6 +45,7 @@ void compileIfSt(void);
 void compileElseSt(void);
 void compileWhileSt(void);
 void compileForSt(void);
+void compileRepeatSt(void);
 void compileArguments(void);
 void compileArguments2(void);
 void compileArguments3(void);

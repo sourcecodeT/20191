@@ -26,7 +26,7 @@ BEGIN
       FOR  I:=1  TO  4  DO  
         CALL  WRITEC(' ');
       CALL  READC(C);  
-      CALL  WRITEC(C)
+      CALL  WRITEC(C);
     END;
   P:=1;  
   Q:=2;
