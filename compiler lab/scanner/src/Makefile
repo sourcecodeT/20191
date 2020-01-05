@@ -23,5 +23,5 @@ error.o: error.c
 	${CC} ${CFLAGS} error.c
 
 clean:
-	rm -f *.o *~
+	rm -f *.o *~ && rm scanner
 
