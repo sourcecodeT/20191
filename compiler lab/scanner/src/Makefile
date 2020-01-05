@@ -7,6 +7,9 @@ all: scanner
 scanner: scanner.o reader.o charcode.o token.o error.o
 	${CC} scanner.o reader.o charcode.o token.o error.o -o scanner
 
+scanner_ident_only_take_k_first_chars: scanner_ident_only_take_k_first_chars.o reader.o charcode.o token.o error.o
+	${CC} scanner_ident_only_take_k_first_chars.o reader.o charcode.o token.o error.o -o scanner
+
 scanner_new_comment_syntax: scanner_new_comment_syntax.o reader.o charcode.o token.o error.o
 	${CC} scanner_new_comment_syntax.o reader.o charcode.o token.o error.o -o scanner
 
@@ -21,6 +24,9 @@ reader.o: reader.c
 
 scanner.o: scanner.c
 	${CC} ${CFLAGS} scanner.c
+
+scanner_ident_only_take_k_first_chars.o: scanner_ident_only_take_k_first_chars.c
+	${CC} ${CFLAGS} scanner_ident_only_take_k_first_chars.c
 
 scanner_new_comment_syntax.o: scanner_new_comment_syntax.c
 	${CC} ${CFLAGS} scanner_new_comment_syntax.c

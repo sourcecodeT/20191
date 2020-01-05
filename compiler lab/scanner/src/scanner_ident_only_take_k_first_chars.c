@@ -63,12 +63,6 @@ void skipComment() {
   }
 }
 
-void skipCommentDoubleSlash() {
-  while (currentChar != EOF && currentChar != '\n') {
-    readChar();
-  }
-}
-
 Token *readIdentKeyword(void) {
   Token *token = makeToken(TK_NONE, lineNo, colNo);
   int count = 1;
@@ -84,9 +78,9 @@ Token *readIdentKeyword(void) {
     readChar();
   }
 
-  if (count > MAX_IDENT_LEN) {
-    error(ERR_IDENTTOOLONG, token->lineNo, token->colNo);
-  }
+  // if (count > MAX_IDENT_LEN) {
+  //   error(ERR_IDENTTOOLONG, token->lineNo, token->colNo);
+  // }
 
   token->string[count] = '\0';
   token->tokenType = checkKeyword(token->string);
@@ -187,11 +181,6 @@ Token *getToken(void) {
     case CHAR_SLASH:
       token = makeToken(SB_SLASH, lineNo, colNo);
       readChar();
-      if (currentChar == CHAR_SLASH) {
-        skipCommentDoubleSlash();
-        readChar();
-        return getToken();
-      }
       return token;
     case CHAR_LT:
       ln = lineNo;
