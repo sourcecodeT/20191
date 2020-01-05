@@ -1,4 +1,4 @@
-/* 
+/*
  * @copyright (c) 2008, Hedspi, Hanoi University of Technology
  * @author Huu-Duc Nguyen
  * @version 1.0
@@ -9,11 +9,7 @@
 
 #include "token.h"
 
-enum TypeClass {
-  TP_INT,
-  TP_CHAR,
-  TP_ARRAY
-};
+enum TypeClass { TP_INT, TP_CHAR, TP_ARRAY };
 
 enum ObjectKind {
   OBJ_CONSTANT,
@@ -25,10 +21,7 @@ enum ObjectKind {
   OBJ_PROGRAM
 };
 
-enum ParamKind {
-  PARAM_VALUE,
-  PARAM_REFERENCE
-};
+enum ParamKind { PARAM_VALUE, PARAM_REFERENCE };
 
 struct Type_ {
   enum TypeClass typeClass;
@@ -38,7 +31,6 @@ struct Type_ {
 
 typedef struct Type_ Type;
 typedef struct Type_ BasicType;
-
 
 struct ConstantValue_ {
   enum TypeClass type;
@@ -55,7 +47,7 @@ struct ObjectNode_;
 struct Object_;
 
 struct ConstantAttributes_ {
-  ConstantValue* value;
+  ConstantValue *value;
 };
 
 struct VariableAttributes_ {
@@ -69,12 +61,12 @@ struct TypeAttributes_ {
 
 struct ProcedureAttributes_ {
   struct ObjectNode_ *paramList;
-  struct Scope_* scope;
+  struct Scope_ *scope;
 };
 
 struct FunctionAttributes_ {
   struct ObjectNode_ *paramList;
-  Type* returnType;
+  Type *returnType;
   struct Scope_ *scope;
 };
 
@@ -84,7 +76,7 @@ struct ProgramAttributes_ {
 
 struct ParameterAttributes_ {
   enum ParamKind kind;
-  Type* type;
+  Type *type;
   struct Object_ *function;
 };
 
@@ -100,13 +92,13 @@ struct Object_ {
   char name[MAX_IDENT_LEN];
   enum ObjectKind kind;
   union {
-    ConstantAttributes* constAttrs;
-    VariableAttributes* varAttrs;
-    TypeAttributes* typeAttrs;
-    FunctionAttributes* funcAttrs;
-    ProcedureAttributes* procAttrs;
-    ProgramAttributes* progAttrs;
-    ParameterAttributes* paramAttrs;
+    ConstantAttributes *constAttrs;
+    VariableAttributes *varAttrs;
+    TypeAttributes *typeAttrs;
+    FunctionAttributes *funcAttrs;
+    ProcedureAttributes *procAttrs;
+    ProgramAttributes *progAttrs;
+    ParameterAttributes *paramAttrs;
   };
 };
 
@@ -128,40 +120,40 @@ struct Scope_ {
 typedef struct Scope_ Scope;
 
 struct SymTab_ {
-  Object* program;
-  Scope* currentScope;
+  Object *program;
+  Scope *currentScope;
   ObjectNode *globalObjectList;
 };
 
 typedef struct SymTab_ SymTab;
 
-Type* makeIntType(void);
-Type* makeCharType(void);
-Type* makeArrayType(int arraySize, Type* elementType);
-Type* duplicateType(Type* type);
-int compareType(Type* type1, Type* type2);
-void freeType(Type* type);
+Type *makeIntType(void);
+Type *makeCharType(void);
+Type *makeArrayType(int arraySize, Type *elementType);
+Type *duplicateType(Type *type);
+int compareType(Type *type1, Type *type2);
+void freeType(Type *type);
 
-ConstantValue* makeIntConstant(int i);
-ConstantValue* makeCharConstant(char ch);
-ConstantValue* duplicateConstantValue(ConstantValue* v);
+ConstantValue *makeIntConstant(int i);
+ConstantValue *makeCharConstant(char ch);
+ConstantValue *duplicateConstantValue(ConstantValue *v);
 
-Scope* createScope(Object* owner, Scope* outer);
+Scope *createScope(Object *owner, Scope *outer);
 
-Object* createProgramObject(char *programName);
-Object* createConstantObject(char *name);
-Object* createTypeObject(char *name);
-Object* createVariableObject(char *name);
-Object* createFunctionObject(char *name);
-Object* createProcedureObject(char *name);
-Object* createParameterObject(char *name, enum ParamKind kind, Object* owner);
+Object *createProgramObject(char *programName);
+Object *createConstantObject(char *name);
+Object *createTypeObject(char *name);
+Object *createVariableObject(char *name);
+Object *createFunctionObject(char *name);
+Object *createProcedureObject(char *name);
+Object *createParameterObject(char *name, enum ParamKind kind, Object *owner);
 
-Object* findObject(ObjectNode *objList, char *name);
+Object *findObject(ObjectNode *objList, char *name);
 
 void initSymTab(void);
 void cleanSymTab(void);
-void enterBlock(Scope* scope);
+void enterBlock(Scope *scope);
 void exitBlock(void);
-void declareObject(Object* obj);
+void declareObject(Object *obj);
 
 #endif

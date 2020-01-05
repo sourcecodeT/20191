@@ -36,18 +36,13 @@ void eat(TokenType tokenType) {
 
 void compileProgram(void) {
   Object *program;
-
   eat(KW_PROGRAM);
   eat(TK_IDENT);
-
   program = createProgramObject(currentToken->string);
   enterBlock(program->progAttrs->scope);
-
   eat(SB_SEMICOLON);
-
   compileBlock();
   eat(SB_PERIOD);
-
   exitBlock();
 }
 
