@@ -1,6 +1,6 @@
+#include "error.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "error.h"
 
 void error(ErrorCode err, int lineNo, int colNo) {
   switch (err) {
@@ -13,6 +13,9 @@ void error(ErrorCode err, int lineNo, int colNo) {
     case ERR_NUMBERTOOLONG:
       printf("%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOLONG);
       break;
+    case ERR_NUMBERTOOLARGE:
+      printf("%d-%d:%s\n", lineNo, colNo, ERM_NUMBERTOOLARGE);
+      break;
     case ERR_INVALIDCHARCONSTANT:
       printf("%d-%d:%s\n", lineNo, colNo, ERM_INVALIDCHARCONSTANT);
       break;
@@ -22,4 +25,3 @@ void error(ErrorCode err, int lineNo, int colNo) {
   }
   exit(-1);
 }
-

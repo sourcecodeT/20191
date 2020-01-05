@@ -10,11 +10,17 @@ scanner: scanner.o reader.o charcode.o token.o error.o
 scanner_dont_care_upper_lower_case: scanner_dont_care_upper_lower_case.o reader.o charcode.o token.o error.o
 	${CC} scanner_dont_care_upper_lower_case.o reader.o charcode.o token.o error.o -o scanner
 
+scanner_error_number_too_large: scanner_error_number_too_large.o reader.o charcode.o token.o error.o
+	${CC} scanner_error_number_too_large.o reader.o charcode.o token.o error.o -o scanner
+
 reader.o: reader.c
 	${CC} ${CFLAGS} reader.c
 
 scanner.o: scanner.c
 	${CC} ${CFLAGS} scanner.c
+
+scanner_error_number_too_large.o: scanner_error_number_too_large.c
+	${CC} ${CFLAGS} scanner_error_number_too_large.c
 
 scanner_dont_care_upper_lower_case.o: scanner_dont_care_upper_lower_case.c
 	${CC} ${CFLAGS} scanner_dont_care_upper_lower_case.c

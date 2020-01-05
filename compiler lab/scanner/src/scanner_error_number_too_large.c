@@ -89,7 +89,6 @@ Token *readIdentKeyword(void) {
     token->tokenType = TK_IDENT;
   }
 
-  upperString(token->string);
   return token;
 }
 
@@ -110,6 +109,11 @@ Token *readNumber(void) {
 
   token->string[count] = '\0';
   token->value = atoi(token->string);
+
+  if (token->value > 999999) {
+    error(ERR_NUMBERTOOLARGE, token->lineNo, token->colNo);
+  }
+
   return token;
 }
 
