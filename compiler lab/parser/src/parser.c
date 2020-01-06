@@ -524,8 +524,14 @@ void compileExpression(void) {
       eat(SB_MINUS);
       compileExpression2();
       break;
-    default:
+    case TK_NUMBER:
+    case TK_CHAR:
+    case SB_LPAR:
+    case TK_IDENT:
       compileExpression2();
+      break;
+    default:
+      error(ERR_INVALIDEXPRESSION, lookAhead->lineNo, lookAhead->colNo);
       break;
   }
   assert("Expression parsed");

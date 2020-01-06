@@ -1,6 +1,8 @@
 Program Example2; (* Factorial *)
    
+Type T = Integer;
 Var n : Integer;
+    A : ARRAY(. 2 .) OF ARRAY(. 4 .) Of T;
 
 Function F(var n : Integer) : Integer;
   Begin
@@ -8,6 +10,7 @@ Function F(var n : Integer) : Integer;
   End;
 
 Begin
+  A(.4.)(.2.) := 0;
   For n := 1 To 7 Do
     Begin
       Call WriteLn;

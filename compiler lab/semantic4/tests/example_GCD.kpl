@@ -1,0 +1,14 @@
+Program ExampleGCD;
+   
+Function GCD(a : Integer; b: Integer) : Integer;
+Begin
+  While a != b Do 
+    Begin 
+      If a > b Then a := a - b Else b := b - a;
+    End; 
+  GCD := a;
+End;
+
+Begin
+  Call WriteI(GCD(6,8));
+END.
